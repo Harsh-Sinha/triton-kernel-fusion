@@ -77,4 +77,19 @@ def TritonNvidiaGPUTMALoweringPass : Pass<"triton-nvidia-tma-lowering", "mlir::M
   ];
 }
 
+def TritonNvidiaGPUHelloWorldPass : Pass<"triton-nvidia-hello-world", "mlir::ModuleOp"> {
+  let summary = "insert no op instructions";
+
+  let description = [{
+    insert no op instructions into each basic block in mlir
+  }];
+
+  let constructor = "mlir::createTritonNvidiaGPUHelloWorldPass()";
+
+  let dependentDialects = [
+    "mlir::triton::gpu::TritonGPUDialect",
+    "mlir::triton::nvidia_gpu::TritonNvidiaGPUDialect"
+  ];
+}
+
 #endif
