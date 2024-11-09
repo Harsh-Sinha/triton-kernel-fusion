@@ -37,7 +37,7 @@ void init_triton_nvidia_passes_ttnvgpuir(py::module &&m) {
                      mlir::createTritonNvidiaGPUTMALoweringPass);
   ADD_PASS_WRAPPER_0("add_nvgpu_to_llvm",
                      mlir::triton::createConvertNVGPUToLLVMPass);
-  ADD_PASS_WRAPPER_0("add_no_ops", mlir::triton::createcreateTritonNvidiaGPUHelloWorldPass)
+  ADD_PASS_WRAPPER_0("add_no_ops", mlir::createcreateTritonNvidiaGPUHelloWorldPass)
 }
 
 void init_triton_nvidia(py::module &&m) {
