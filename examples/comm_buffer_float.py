@@ -1,7 +1,7 @@
 import triton
 import triton.language as tl
 import torch
-
+import os
 # Define the fused computation and communication kernel
 @triton.jit
 def fused_matmul_comm_kernel(
@@ -89,6 +89,9 @@ def launch_kernel(A, B, C, C_comm, M, N, K, stride_am, stride_ak, stride_bk, str
 
 # Main code
 if __name__ == "__main__":
+
+    os.environ["MLIR_ENABLE_DUMP"] = "1"
+    os.environ["TRITON_ALWAYS_COMPILE"] = "1"
     # Define matrix dimensions
     M = 64  # Number of rows of A and C
     N = 64  # Number of columns of B and C
