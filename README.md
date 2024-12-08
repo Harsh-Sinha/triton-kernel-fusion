@@ -41,6 +41,8 @@ pip install -U --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/
 git clone https://github.com/triton-lang/triton.git;
 cd triton;
 
+pip install torch
+
 pip install ninja cmake wheel pybind11; # build-time dependencies
 pip install -e python
 ```
@@ -50,6 +52,8 @@ Or with a virtualenv:
 ```
 git clone https://github.com/triton-lang/triton.git;
 cd triton;
+
+pip install torch
 
 python -m venv .venv --prompt triton;
 source .venv/bin/activate;
