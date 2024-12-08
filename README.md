@@ -1,39 +1,6 @@
-<div align="center">
-  <img src="https://lh5.googleusercontent.com/wzQKEsTFkrgNQO9JjhGH5wFvslJr1saLtLaJ_a6Fp_gNENpvt3VG7BmztwngU9hFJaU4CPwGiw1opQtDvTkLrxWRbO_a12Q-pdESWHgtmheIHcPbOL5ZMC4TSiJVe5ty1w=w3517" alt="Triton logo">
-</div>
-
-The Triton Conference is happening again on September 17th, 2024 in Fremont (CA)!
-
-If you are interested in attending, please fill up [this form](https://docs.google.com/forms/d/e/1FAIpQLSecHC1lkalcm0h3JDUbspekDX5bmBvMxgVTLaK3e-61bzDDbg/viewform).
-
-
-| **`Documentation`** | **`Nightly Wheels`** |
-|-------------------- | -------------------- |
-| [![Documentation](https://github.com/triton-lang/triton/actions/workflows/documentation.yml/badge.svg)](https://triton-lang.org/) | [![Wheels](https://github.com/triton-lang/triton/actions/workflows/wheels.yml/badge.svg?branch=release/2.0.x)](https://github.com/triton-lang/triton/actions/workflows/wheels.yml) |
-
-
 # Triton
 
-This is the development repository of Triton, a language and compiler for writing highly efficient custom Deep-Learning primitives. The aim of Triton is to provide an open-source environment to write fast code at higher productivity than CUDA, but also with higher flexibility than other existing DSLs.
-
-The foundations of this project are described in the following MAPL2019 publication: [Triton: An Intermediate Language and Compiler for Tiled Neural Network Computations](http://www.eecs.harvard.edu/~htk/publication/2019-mapl-tillet-kung-cox.pdf). Please consider citing this work if you use Triton!
-
-The [official documentation](https://triton-lang.org) contains installation instructions and tutorials.  See also these third-party [Triton puzzles](https://github.com/srush/Triton-Puzzles), which can all be run using the Triton interpreter -- no GPU required.
-
-# Quick Installation
-
-You can install the latest stable release of Triton from pip:
-
-```bash
-pip install triton
-```
-Binary wheels are available for CPython 3.8-3.12 and PyPy 3.8-3.9.
-
-And the latest nightly release:
-
-```bash
-pip install -U --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/Triton-Nightly/pypi/simple/ triton-nightly
-```
+This is our forked development repository of Triton, a language and compiler for writing highly efficient custom Deep-Learning primitives. The aim of Triton is to provide an open-source environment to write fast code at higher productivity than CUDA, but also with higher flexibility than other existing DSLs.
 
 # Install from source
 
@@ -44,7 +11,7 @@ cd triton;
 pip install torch
 
 pip install ninja cmake wheel pybind11; # build-time dependencies
-pip install -e python
+sudo pip install -e python
 ```
 
 Or with a virtualenv:
@@ -59,63 +26,10 @@ python -m venv .venv --prompt triton;
 source .venv/bin/activate;
 
 pip install ninja cmake wheel pybind11; # build-time dependencies
-pip install -e python
+sudo pip install -e python
 ```
 
-# Building with a custom LLVM
-
-Triton uses LLVM to generate code for GPUs and CPUs.  Normally, the Triton build
-downloads a prebuilt LLVM, but you can also build LLVM from source and use that.
-
-LLVM does not have a stable API, so the Triton build will not work at an
-arbitrary LLVM version.
-
-1. Find the version of LLVM that Triton builds against.  Check
-`cmake/llvm-hash.txt` to see the current version. For example, if it says:
-       49af6502c6dcb4a7f7520178bd14df396f78240c
-
-   This means that the version of Triton you have builds against
-   [LLVM](https://github.com/llvm/llvm-project) 49af6502.
-
-2. `git checkout` LLVM at this revision.  Optionally, make additional
-   modifications to LLVM.
-
-3. [Build LLVM](https://llvm.org/docs/CMake.html).  For example, you might run
-
-       $ cd $HOME/llvm-project  # your clone of LLVM.
-       $ mkdir build
-       $ cd build
-       $ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=ON ../llvm -DLLVM_ENABLE_PROJECTS="mlir;llvm" -DLLVM_TARGETS_TO_BUILD="host;NVPTX;AMDGPU"
-       $ ninja
-
-4. Grab a snack, this will take a while.
-
-5. Build Triton as above, but set the following environment variables.
-
-       # Modify as appropriate to point to your LLVM build.
-       $ export LLVM_BUILD_DIR=$HOME/llvm-project/build
-
-       $ cd <triton install>
-       $ LLVM_INCLUDE_DIRS=$LLVM_BUILD_DIR/include \
-         LLVM_LIBRARY_DIR=$LLVM_BUILD_DIR/lib \
-         LLVM_SYSPATH=$LLVM_BUILD_DIR \
-         pip install -e python
-
 # Tips for building
-
-- Set `TRITON_BUILD_WITH_CLANG_LLD=true` as an environment variable to use clang
-  and lld.  lld in particular results in faster builds.
-
-- Set `TRITON_BUILD_WITH_CCACHE=true` to build with ccache.
-
-- Set `TRITON_HOME=/some/path` to change the location of the `.triton`
-  directory where Triton's cache is located and downloads are stored
-  during the build. By default, this is the user's home directory. It
-  can be changed anytime.
-
-- Pass `--no-build-isolation` to `pip install` to make nop builds faster.
-  Without this, every invocation of `pip install` uses a different symlink to
-  cmake, and this forces ninja to rebuild most of the `.a` files.
 
 - vscode intellisense has some difficulty figuring out how to build Triton's C++
   (probably because, in our build, users don't invoke cmake directly, but
@@ -132,6 +46,17 @@ arbitrary LLVM version.
       Ctrl + P` on Windows/Linux) and open `C/C++: Edit Configurations (UI)`.
     - Open "Advanced Settings" and paste the full path to
       `compile_commands.json` into the "Compile Commands" textbox.
+
+# Add triton binaries to your path variable
+Once you have succesfully built you will have the following to your environment path.
+
+`/full/path/to/your/triton/root/dir/python/build/cmake.OS-ARCH-cpython-VERSION/bin`  
+
+Where OS, ARCH, and VERSION are going to be specific to your machine. Please locate this folder and make sure it exists. Place the following at the bottom in .bashrc  
+
+`export PATH=/full/path/to/your/triton/root/dir/python/build/cmake.OS-ARCH-cpython-VERSION/bin${PATH:+:${PATH}}`  
+
+NOTE: this should be an actual path in your system and not the pseudo path above
 
 # Running tests
 
