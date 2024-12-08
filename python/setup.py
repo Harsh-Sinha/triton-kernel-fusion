@@ -401,6 +401,10 @@ class CMakeBuild(build_ext):
     def build_extension(self, ext):
         lit_dir = shutil.which('lit')
         ninja_dir = shutil.which('ninja')
+        if ninja_dir is None:
+            ninja_dir = os.getcwd()
+            ninja_dir += '/../.venv/bin/ninja'
+
         # lit is used by the test suite
         thirdparty_cmake_args = get_thirdparty_packages([get_llvm_package_info()])
         thirdparty_cmake_args += self.get_pybind11_cmake_args()
