@@ -68,4 +68,18 @@ dir: `cd test/TritonNvidiaGPU`
 cmd: `triton-opt hello_world.mlir -split-input-file --triton-nvidia-hello-world --allocate-shared-memory`  
   
 You will see in between every instruction originally in `hello_world.mlir` there is the following "no op instruction":  
-`%c42_i32_0 = arith.constant 42 : i32`
+`%c42_i32_0 = arith.constant 42 : i32`  
+
+# Modifed Code Location
+Our optimization pass is located here: `lib/Dialect/TritonNvidiaGPU/Transforms/HelloWorld.cpp`  
+Here are other files we had to modify as well:  
+`include/triton/Dialect/TritonNvidiaGPU/Transforms/Passes.h`
+`include/triton/Dialect/TritonNvidiaGPU/Transforms/Passes.td`
+`lib/Dialect/TritonNvidiaGPU/Transforms/CMakeLists.txt`
+`third_party/nvidia/triton_nvidia.cc`  
+
+Additionally, here are test files we wrote:  
+`test/TritonNvidiaGPU/hello_world.mlir`
+`examples/comm_buffer_float.py`
+`examples/comm_buffer_int.py`
+
