@@ -72,14 +72,15 @@ You will see in between every instruction originally in `hello_world.mlir` there
 
 # Modifed Code Location
 Our optimization pass is located here: `lib/Dialect/TritonNvidiaGPU/Transforms/HelloWorld.cpp`  
+  
 Here are other files we had to modify as well:  
-`include/triton/Dialect/TritonNvidiaGPU/Transforms/Passes.h`
-`include/triton/Dialect/TritonNvidiaGPU/Transforms/Passes.td`
-`lib/Dialect/TritonNvidiaGPU/Transforms/CMakeLists.txt`
+`include/triton/Dialect/TritonNvidiaGPU/Transforms/Passes.h`  
+`include/triton/Dialect/TritonNvidiaGPU/Transforms/Passes.td`  
+`lib/Dialect/TritonNvidiaGPU/Transforms/CMakeLists.txt`  
 `third_party/nvidia/triton_nvidia.cc`  
-
+  
 Additionally, here are test files we wrote:  
-`test/TritonNvidiaGPU/hello_world.mlir`
-`examples/comm_buffer_float.py`
+`test/TritonNvidiaGPU/hello_world.mlir`  
+`examples/comm_buffer_float.py`  
 `examples/comm_buffer_int.py`
 
