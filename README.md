@@ -48,7 +48,7 @@ sudo pip install -e python
       `compile_commands.json` into the "Compile Commands" textbox.
 
 # Add triton binaries to your path variable
-Once you have succesfully built you will have the following to your environment path.
+Once you have succesfully built you will have to add the following to your environment path.
 
 `/full/path/to/your/triton/root/dir/python/build/cmake.OS-ARCH-cpython-VERSION/bin`  
 
